@@ -1,15 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text,TextInput, View, ImagePropTypes, Button } from 'react-native';
+import { StyleSheet, Text, TextInput, View, ImagePropTypes, Button } from 'react-native';
 import axios from 'axios'
-const apiKey = 'OnSv0FQWGGe8C2QdEpKIFcVjSdvAb2fmSnu4TGV2'
+import { useNavigation } from '@react-navigation/native'
 
 export default function page1() {
-    const [state, setState] = useState({
-        date: [],
-        explanation: [],
-        title: [],
-    });
-    const [singer,setSinger] = useState("")
+    const navigate = useNavigation()
+    const [data, setData] = useState(null)
+    const [singer, setSinger] = useState("")
+    const [errortext, setErrortext] = useState(false)
 
     const click = async () => {
         await axios({
@@ -21,20 +19,35 @@ export default function page1() {
             }
         })
             .then(response => {
-                console.log(response.data);
+                console.log(response.data.data);
+                setData(response.data.data)
             })
             .catch(err => {
                 console.log(err);
             });
+        if (singer) {
+            navigate.navigate('PAGE2', { data: data })
+            setErrortext(false)
+        } else {
+            setErrortext(true)
+        }
+
+
     }
 
     return (
         <View>
-            <TextInput onChangeText={e=>setSinger(e)} />
+            <TextInput onChangeText={e => setSinger(e)} />
             <Button
                 title="click"
                 onPress={click}
             />
+            <Text>
+                {
+                    errortext ? "error" : ""
+
+                }
+            </Text>
         </View>
     )
 }
