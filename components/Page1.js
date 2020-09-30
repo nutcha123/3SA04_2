@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, TextInput, View, ImagePropTypes, Button } from 'react-native';
+import { StyleSheet, Text, TextInput, View, ImagePropTypes, Button, ImageBackground } from 'react-native';
 import axios from 'axios'
 import { useNavigation } from '@react-navigation/native'
 
@@ -42,18 +42,30 @@ export default function page1() {
 
     return (
         <View>
-            <TextInput onChangeText={e => setSinger(e)} />
-            <Button
-                title="click"
-                onPress={click}
-            />
-            <Text>
-                {
-                    errortext ? "error" : ""
+            <ImageBackground source={require('../bg.jpg')}style={styles.backdrop}>
+            <h3>Search for singer name</h3>
 
-                }
-            </Text>
+                <TextInput onChangeText={e => setSinger(e)} />
+                <Button
+                    title="Search"
+                    onPress={click}
+                />
+                <Text>
+                    {
+                        errortext ? "error" : ""
+
+                    }
+                </Text>
+            </ImageBackground>
         </View>
     )
 }
+
+const styles = StyleSheet.create({
+    backdrop: {
+        alignItems: 'center',
+        width: '100%',
+        height: '300%'
+    },
+});
 

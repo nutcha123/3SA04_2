@@ -34,6 +34,7 @@ const Page2 = ({ route }) => {
 
     return (
         <View>
+            <h2>All Song Title</h2>
             {check()}
         </View>
     )
