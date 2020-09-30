@@ -1,18 +1,40 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Text, View } from 'react-native'
 
 const Page2 = ({ route }) => {
-    const [data,setData] =useState(route.params.data)
-    console.log(data);
+    const [data, setData] = useState(route.params.allData)
+
+    function check() {
+        if (data != null) {
+            return (
+                <View>
+                    {
+                        data.map((value) => {
+                            return (
+                                <Text>
+                                    {value.title}
+                                </Text>
+                            )
+                        })
+                    }
+                </View>
+            )
+        } else {
+            return (
+                <View>
+                    Please press again..
+                </View>
+            )
+        }
+    }
+
+    useEffect(() => {
+        console.log(data);
+    }, [data])
+
     return (
         <View>
-            {
-                data? data.map((value)=>{
-                    <Text>
-                        {value.title}
-                    </Text>
-                }):""
-            }
+            {check()}
         </View>
     )
 }

@@ -5,7 +5,7 @@ import { useNavigation } from '@react-navigation/native'
 
 export default function page1() {
     const navigate = useNavigation()
-    const [data, setData] = useState(null)
+    const [allData, setAllData] = useState(null)
     const [singer, setSinger] = useState("")
     const [errortext, setErrortext] = useState(false)
 
@@ -20,13 +20,18 @@ export default function page1() {
         })
             .then(response => {
                 console.log(response.data.data);
-                setData(response.data.data)
+                setAllData(response.data.data)
+
+                let i = 0
+                for (i = 0; i < allData.length; i++) {
+                    console.log(allData[i].album.title);
+                }
             })
             .catch(err => {
                 console.log(err);
             });
         if (singer) {
-            navigate.navigate('PAGE2', { data: data })
+            navigate.navigate('PAGE2', { allData: allData })
             setErrortext(false)
         } else {
             setErrortext(true)
